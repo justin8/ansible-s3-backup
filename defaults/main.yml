@@ -1,7 +1,7 @@
 ---
 schedule: weekly
 bucket: replace-me
-profile: replace-me
+profile: default
 storage_class: DEEP_ARCHIVE
 folders:
   - replace-me1
