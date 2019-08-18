@@ -1,0 +1,11 @@
+---
+schedule: weekly
+bucket: replace-me
+profile: replace-me
+storage_class: DEEP_ARCHIVE
+folders:
+  - replace-me1
+  - replace-me2
+exclusions:
+  - "*/.DS_Store"
+  - "*/._.DS_Store"

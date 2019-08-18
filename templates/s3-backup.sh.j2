@@ -1,0 +1,23 @@
+#!/bin/bash
+
+LOG=/var/log/s3-backup.log
+LOCK=/tmp/s3-backup
+
+exec 1>>$LOG 2>&1
+
+echo "Current PID: $$"
+
+set -xeuo pipefail
+
+exec 200>$LOCK
+flock -n 200 || exit 1
+
+folders=(
+{% for folder in folders %}
+"{{folder}}"
+{% endfor %}
+)
+
+for folder in "${folders[@]}"; do
+	aws --profile {{profile}} s3 sync "$folder" "s3://{{bucket}}$folder" --delete --storage-class {{storage_class}} {% for exclusion in exclusions%}--exclude {{exclusion}} {% endfor %} --no-follow-symlinks
+done
