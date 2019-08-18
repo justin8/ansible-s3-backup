@@ -3,6 +3,7 @@ schedule: weekly
 bucket: replace-me
 profile: default
 storage_class: DEEP_ARCHIVE
+folder_root: "" # A base folder to assume all folders are under, e.g. /data
 folders:
   - replace-me1
   - replace-me2

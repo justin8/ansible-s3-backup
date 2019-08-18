@@ -19,5 +19,5 @@ folders=(
 )
 
 for folder in "${folders[@]}"; do
-	aws --profile {{profile}} s3 sync "$folder" "s3://{{bucket}}$folder" --delete --storage-class {{storage_class}} {% for exclusion in exclusions%}--exclude {{exclusion}} {% endfor %} --no-follow-symlinks
+	aws --profile {{profile}} s3 sync "{{folder_root}}$folder" "s3://{{bucket}}$folder" --delete --storage-class {{storage_class}} {% for exclusion in exclusions%}--exclude {{exclusion}} {% endfor %} --no-follow-symlinks
 done
