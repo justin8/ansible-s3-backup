@@ -12,3 +12,4 @@ exclusions:
   - "*/._.DS_Store"
 s3_backup_pre: "" # Things to do before the backups start
 s3_backup_post: "" # Things to do after the backups stop
+extra_arguments: ""
