@@ -21,14 +21,14 @@ Including an example of how to use your role (for instance, with variables passe
     - hosts: servers
       roles:
         - role: s3-backups
-          schedule: daily
-          bucket: foo-backups-bucket
-          folders:
+          s3_backup_schedule: daily
+          s3_backup_bucket: foo-backups-bucket
+          s3_backup_folders:
             - /path/to/a/folder
             - /path/to/another/folder
-          exclusions:
+          s3_backup_exclusions:
             - /path/to/a/folder/exclude/this
-          storage_class: GLACIER
+          s3_backup_storage_class: GLACIER
 
 ## License
 

@@ -13,7 +13,7 @@ exec 200>$LOCK
 flock -n 200 || exit 1
 
 folders=(
-{% for folder in folders %}
+{% for folder in s3_backup_folders %}
 "{{folder}}"
 {% endfor %}
 )
@@ -21,7 +21,7 @@ folders=(
 {{ s3_backup_pre }}
 
 for folder in "${folders[@]}"; do
-	aws --profile {{profile}} s3 sync "{{folder_root}}$folder" "s3://{{bucket}}$folder" --delete --storage-class {{storage_class}} {% for exclusion in exclusions%}--exclude "{{exclusion}}" {% endfor %} --no-follow-symlinks --no-progress {{extra_arguments}}
+	aws --profile {{s3_backup_profile}} s3 sync "{{s3_backup_folder_root}}$folder" "s3://{{s3_backup_bucket}}$folder" --delete --storage-class {{s3_backup_storage_class}} {% for exclusion in s3_backup_exclusions%}--exclude "{{exclusion}}" {% endfor %} --no-follow-symlinks --no-progress {{s3_backup_extra_arguments}}
 done
 
 {{ s3_backup_post }}

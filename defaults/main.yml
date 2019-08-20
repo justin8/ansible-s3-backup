@@ -1,15 +1,15 @@
 ---
-schedule: weekly
-bucket: replace-me
-profile: default
-storage_class: DEEP_ARCHIVE
-folder_root: "" # A base folder to assume all folders are under, e.g. /data
-folders:
+s3_backup_schedule: weekly
+s3_backup_bucket: replace-me
+s3_backup_profile: default
+s3_backup_storage_class: DEEP_ARCHIVE
+s3_backup_folder_root: "" # A base folder to assume all folders are under, e.g. /data
+s3_backup_folders:
   - replace-me1
   - replace-me2
-exclusions:
+s3_backup_exclusions:
   - "*/.DS_Store"
   - "*/._.DS_Store"
 s3_backup_pre: "" # Things to do before the backups start
 s3_backup_post: "" # Things to do after the backups stop
-extra_arguments: ""
+s3_backup_extra_arguments: ""
