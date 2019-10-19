@@ -1,14 +1,14 @@
 ---
 - name: copy s3-backup.sh
   template:
-        src: s3-backup.sh.j2
-        dest: /usr/local/bin/s3-backup.sh
+    src: s3-backup.sh.j2
+    dest: /usr/local/bin/s3-backup.sh
 - name: Create cron job to run s3-backup.sh
   cron:
-        name: "s3-backup"
-        job: "/usr/local/bin/s3-backup.sh"
-        special_time: "{{s3_backup_schedule}}"
+    name: "s3-backup"
+    job: "/usr/local/bin/s3-backup.sh"
+    special_time: "{{s3_backup_schedule}}"
 - name: enable rotation of logs
   template:
-        src: s3-backup.logrotate.j2
-        dest: /etc/logrotate.d/s3-backup
+    src: s3-backup.logrotate.j2
+    dest: /etc/logrotate.d/s3-backup
