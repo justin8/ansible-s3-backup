@@ -18,10 +18,15 @@ folders=(
 {% endfor %}
 )
 
+echo "Starting pre-backup scripts..."
 {{ s3_backup_pre }}
 
+echo "Starting backup..."
 for folder in "${folders[@]}"; do
 	aws --profile {{s3_backup_profile}} s3 sync "{{s3_backup_folder_root}}$folder" "s3://{{s3_backup_bucket}}$folder" --delete --storage-class {{s3_backup_storage_class}} {% for exclusion in s3_backup_exclusions%}--exclude "{{exclusion}}" {% endfor %} --no-follow-symlinks --no-progress {{s3_backup_extra_arguments}}
 done
 
+echo "Starting post-backup scripts..."
 {{ s3_backup_post }}
+
+echo "Completed backup at $(date)"
