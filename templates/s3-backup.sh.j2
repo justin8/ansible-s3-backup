@@ -1,16 +1,20 @@
 #!/bin/bash
+set -xeuo pipefail
 
 LOG=/var/log/s3-backup.log
 LOCK=/tmp/s3-backup
 
+function err_handler() {
+	echo "Error! Something has gone wrong"
+}
+
 exec 1>>$LOG 2>&1
 
 echo "Current PID: $$"
-
-set -xeuo pipefail
-
 exec 200>$LOCK
 flock -n 200 || exit 1
+
+trap err_handler ERR
 
 folders=(
 {% for folder in s3_backup_folders %}
