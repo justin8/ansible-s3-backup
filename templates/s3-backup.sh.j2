@@ -3,6 +3,7 @@ set -xeuo pipefail
 
 LOG=/var/log/s3-backup.log
 LOCK=/tmp/s3-backup
+export PATH=/usr/local/bin:/usr/bin:/bin
 
 function err_handler() {
 	echo "Error! Something has gone wrong"
