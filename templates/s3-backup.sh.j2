@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xeuo pipefail
+set -xuo pipefail
 
 LOG=/var/log/s3-backup.log
 LOCK=/tmp/s3-backup
@@ -15,8 +15,6 @@ echo "Current PID: $$"
 exec 200>$LOCK
 flock -n 200 || exit 1
 
-trap err_handler ERR
-
 folders=(
 {% for folder in s3_backup_folders %}
 "{{folder}}"
@@ -29,6 +27,10 @@ echo "Starting pre-backup scripts..."
 echo "Starting backup..."
 for folder in "${folders[@]}"; do
 	aws --profile {{s3_backup_profile}} s3 sync "{{s3_backup_folder_root}}$folder" "s3://{{s3_backup_bucket}}$folder" --delete --storage-class {{s3_backup_storage_class}} {% for exclusion in s3_backup_exclusions%}--exclude "{{exclusion}}" {% endfor %} --no-follow-symlinks --no-progress {{s3_backup_extra_arguments}}
+	response="$?"
+	if [[ $response -gt 0 ]] && [[ $response -ne 2 ]]; then # https://docs.aws.amazon.com/cli/latest/topic/return-codes.html
+		err_handler
+	fi
 done
 
 echo "Starting post-backup scripts..."
